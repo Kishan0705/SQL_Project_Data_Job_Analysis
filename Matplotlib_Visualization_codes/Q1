@@ -1,1 +1,35 @@
+## 🔍 Question 1: What are the Most In-Demand Skills for Data Analysts?
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Data
+data = [
+    {"skills": "sql", "total_jobs": "92628"},
+    {"skills": "excel", "total_jobs": "67031"},
+    {"skills": "python", "total_jobs": "57326"},
+    {"skills": "tableau", "total_jobs": "46554"},
+    {"skills": "power bi", "total_jobs": "39468"}
+]
+
+df = pd.DataFrame(data)
+df['total_jobs'] = df['total_jobs'].astype(int)
+df = df.sort_values(by='total_jobs', ascending=False)
+
+plt.figure(figsize=(10, 6))
+plt.style.use('dark_background')
+
+colors = plt.cm.Blues(np.linspace(0.3, 1, len(df)))
+
+df.plot(kind='barh', x='skills', y='total_jobs', color=colors, edgecolor='white', legend=False)
+plt.title('Total Job Postings for Different Skills in 2023', fontsize=16, color='white', pad=20)
+plt.xlabel('Total Jobs', fontsize=12, color='white', labelpad=10)
+plt.ylabel('Skills', fontsize=12, color='white', labelpad=10)
+plt.gca().invert_yaxis()
+plt.grid(visible=True, axis='x', color='gray', linestyle='--', linewidth=0.5)
+plt.tight_layout()
+plt.show()
+```
 

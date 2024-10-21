@@ -137,6 +137,31 @@ LIMIT 10;
 
 - **CBRE**: Also has **53 positions**, reflecting the need for Data Analysts who can interpret real estate market trends and data.
 
+  ##  🔍 Question 3: Monthly Growth of Data Analyst Job Postings
+
+The following SQL query analyzes the monthly growth of job postings for Data Analysts, highlighting both the number of jobs posted and the monthly changes.
+
+```sql
+SELECT
+    EXTRACT(MONTH FROM job_posted_date) AS Month_number,  
+    EXTRACT(YEAR FROM job_posted_date) AS Years,
+    TO_CHAR(job_posted_date, 'Month') AS Month_name,    
+    COUNT(job_id) AS No_of_jobs,
+    COUNT(job_id) - LAG(COUNT(job_id)) OVER (
+        ORDER BY EXTRACT(YEAR FROM job_posted_date), EXTRACT(MONTH FROM job_posted_date)
+    ) AS Difference
+FROM 
+    job_postings_fact 
+WHERE 
+    job_title_short = 'Data Analyst' 
+GROUP BY 
+    Month_name, Years, Month_number  
+ORDER BY 
+    Years ASC, Month_number ASC;
+```
+
+![Monthly Growth of Data Analyst Job Postings Visualization](https://github.com/Kishan0705/SQL_Project_Data_Job_Analysis/blob/96e96104c7eab39c03e191372ceac57a6df2a7ac/assets/Monthly%20Growth%20of%20Data%20Analyst%20Job%20Postings%20.png)
+
 # What I Learned 
 
 # Conclusions

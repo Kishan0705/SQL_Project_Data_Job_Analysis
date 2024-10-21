@@ -1,4 +1,7 @@
 # Project Overview  
+
+# [Scroll to the End for SQL Queries, Visualizations, and Insights!]
+
 🤔 Curious about the job market for Data Analysts? This project dives deep into the most valuable insights for aspiring Data Analysts, providing a clear picture of what’s currently in demand. This is a real-world, unguided project I built out of sheer curiosity 🔥, aimed at uncovering key trends and requirements for the Data Analyst role.
 
 - 🔍 The insights focus on:
@@ -297,11 +300,11 @@ ORDER BY
 - **Skill Demand**: The repetition of these skills across various job postings indicates a strong demand for proficiency in these areas, guiding job seekers on which skills to prioritize for career advancement in high-paying Data Analyst positions.
 
 
-#📖 What I Learned 
+# 📖 What I Learned 
 
 In this **SQL + Python (for Visualization)** project, I gained valuable insights into solving real-time SQL questions. The questions were formulated by me, driven by my desire to understand the **Data Analyst job market** better.
 
-#### 💡 Key Takeaways:
+## 💡 Key Takeaways:
 
 - **Advanced SQL Skills**: I applied complex SQL techniques, including:
   - **Joins**: Merging data from multiple tables to extract relevant information.

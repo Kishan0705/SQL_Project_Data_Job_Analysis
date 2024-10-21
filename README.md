@@ -233,7 +233,95 @@ ORDER BY
 - **Mid-Year Fluctuations**: Job postings showed variability, with peaks and dips throughout the year.
 - **Year-End Decline**: A decrease in postings was observed towards the end of the year, indicating potential seasonal trends.
 
+## 🔍 Question 5: What skills are required for top-paying Data Analyst Jobs?
 
-# What I Learned 
+- **Objective**: Identify the specific skills required for the top 10 highest-paying Data Analyst jobs.
+- **Reason**: This analysis provides a detailed look at which highest-paying jobs demand certain skills, helping job seekers understand which skills to develop that align with top salaries.
+
+### SQL Query
+
+```sql
+WITH top_paying_jobs AS (
+    SELECT
+        f.job_id,
+        f.job_title,
+        f.salary_year_avg,
+        c.name AS company_name
+    FROM
+        job_postings_fact f
+    LEFT JOIN 
+        company_dim c 
+    ON 
+        f.company_id = c.company_id
+    WHERE
+        f.job_title_short = 'Data Analyst'
+        AND f.salary_year_avg IS NOT NULL
+    ORDER BY 
+        f.salary_year_avg DESC
+    LIMIT 10
+)
+
+SELECT 
+    tpj.*,
+    sd.skills
+FROM 
+    top_paying_jobs tpj
+INNER JOIN 
+    skills_job_dim sjd
+ON 
+    tpj.job_id = sjd.job_id
+INNER JOIN 
+    skills_dim sd
+ON 
+    sjd.skill_id = sd.skill_id
+ORDER BY 
+    tpj.salary_year_avg DESC;
+```
+
+![Top Paying Data Analyst Jobs Required Skills : Visualization](https://github.com/Kishan0705/SQL_Project_Data_Job_Analysis/blob/aa19787251fc875e70e5afaacee2329fdfbbfc2d/assets/Top%20Paying%20DA%20Jobs%20Required%20skills%20.png)
+
+### 📝 Insights on Top-Paying Data Analyst Jobs and Required Skills
+
+- **Highest Paying Roles**: The top-paying Data Analyst positions include titles such as *Data Analyst*, *Sr Data Analyst*, and *Director of Analytics*, with average salaries ranging from **$285,000** to **$650,000**.
+  
+- **Companies Offering High Salaries**: Notable companies offering these roles include *Mantys*, *Citigroup, Inc.*, and *OpenAI*, highlighting the competitive nature of the job market in data analytics.
+  
+- **Essential Skills**: The most sought-after skills for these roles include:
+  
+  - **Python**: Required for data manipulation and analysis (4 mentions).
+  - **Excel**: Important for data organization and reporting (3 mentions).
+  - **SQL**: Crucial for database management and queries (3 mentions).
+  - **R, Tableau**: Also frequently required, emphasizing the importance of data visualization (3 mentions each).
+  - **SAS** and **Power BI**: Valuable skills that enhance data analysis capabilities (2 mentions each).
+    
+- **Skill Demand**: The repetition of these skills across various job postings indicates a strong demand for proficiency in these areas, guiding job seekers on which skills to prioritize for career advancement in high-paying Data Analyst positions.
+
+
+#📖 What I Learned 
+
+In this **SQL + Python (for Visualization)** project, I gained valuable insights into solving real-time SQL questions. The questions were formulated by me, driven by my desire to understand the **Data Analyst job market** better.
+
+#### 💡 Key Takeaways:
+
+- **Advanced SQL Skills**: I applied complex SQL techniques, including:
+  - **Joins**: Merging data from multiple tables to extract relevant information.
+  - **Common Table Expressions (CTEs)**: Simplifying complex queries for better readability and organization.
+  - **Window Functions**: Performing calculations across a set of rows related to the current row.
+  - **Aggregations**: Summarizing data effectively to derive meaningful insights.
+
+- **Data Visualization**: To present my findings in an appealing and easily digestible format, I utilized the **Matplotlib** library in Python. This allowed me to create visually engaging charts and graphs.
+
+- **Storytelling with Data**: I documented the insights I uncovered, narrating them in a storytelling format to enhance understanding and engagement.
+
+This project not only strengthened my technical skills but also sharpened my analytical thinking, equipping me to navigate the complexities of the Data Analyst job landscape.
+
 
 # Conclusions
+
+This project provided a comprehensive analysis of the Data Analyst job market, highlighting trends, skills, and opportunities that aspiring analysts can leverage.
+
+If you found this project useful, I would greatly appreciate your support by giving this repository a star! ⭐️
+
+For any questions or feedback, feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/kishan-soni0705/). I’m always open to discussions and eager to connect!
+
+

@@ -162,6 +162,78 @@ ORDER BY
 
 ![Monthly Growth of Data Analyst Job Postings Visualization](https://github.com/Kishan0705/SQL_Project_Data_Job_Analysis/blob/96e96104c7eab39c03e191372ceac57a6df2a7ac/assets/Monthly%20Growth%20of%20Data%20Analyst%20Job%20Postings%20.png)
 
+### 📊 Monthly Trend of Data Analyst Jobs
+
+- **January 2023** experienced a remarkable spike in job postings with **23,697** listings, a significant increase from December 2022.
+- The job market saw fluctuations throughout the year, with notable peaks in **August** (**18,602 jobs**) and dips in **September** (**14,997 jobs**).
+- The year ended with **13,560** job postings in December 2023, reflecting a decline from previous months.
+
+### 📝 Key Takeaways
+
+- **Strong Start**: The year began with a high demand for Data Analyst roles.
+- **Variable Trends**: The job market exhibited variability, indicating changing hiring needs.
+- **Year-End Slowdown**: A noticeable decrease in job postings towards the end of the year suggests a seasonal trend.
+
+
+## 🔍 Question 4: Identify the monthly count of job postings for Data Analyst positions that require proficiency in the following key skills: Python, Excel, SQL, Tableau, and Power BI. Ensure that only those job postings that include all these skills are considered in the analysis.
+
+```sql
+WITH Job_skills AS ( 
+    SELECT
+        sj.job_id,
+        COUNT(DISTINCT s.skill_id) AS da_skills
+    FROM 
+        skills_job_dim sj 
+    JOIN 
+        skills_dim s ON sj.skill_id = s.skill_id
+    WHERE 
+        s.skills IN ('python', 'excel', 'sql', 'tableau', 'powerbi', 'power bi')
+    GROUP BY 
+        sj.job_id
+    HAVING 
+        SUM(CASE WHEN s.skills = 'python' THEN 1 ELSE 0 END) > 0 AND
+        SUM(CASE WHEN s.skills = 'excel' THEN 1 ELSE 0 END) > 0 AND
+        SUM(CASE WHEN s.skills = 'sql' THEN 1 ELSE 0 END) > 0 AND
+        SUM(CASE WHEN s.skills IN ('powerbi', 'power bi', 'tableau') THEN 1 ELSE 0 END) > 0 
+),
+Filtered_jobs AS ( 
+    SELECT
+        f.job_id,
+        f.job_posted_date
+    FROM 
+        job_postings_fact f
+    JOIN 
+        Job_skills js ON f.job_id = js.job_id
+)
+
+SELECT
+    EXTRACT(MONTH FROM job_posted_date) AS Month_no,
+    TO_CHAR(job_posted_date, 'Month') AS Month_name,
+    EXTRACT(YEAR FROM job_posted_date) AS years,
+    COUNT(job_id) AS No_of_jobs
+FROM 
+    Filtered_jobs
+GROUP BY  
+    Month_no, Month_name, years
+ORDER BY 
+    years ASC, Month_no ASC;
+```
+
+![Monthly Job Trend which Required All 5 Skills of DA : Visualization](https://github.com/Kishan0705/SQL_Project_Data_Job_Analysis/blob/00b4c9c5ab3743ae3869f8c551cc330c9404bb4a/assets/Monthly%20Job%20Trend%20for%205%20Skills%20.png)
+
+### 📊 Monthly Trend of Job Postings Requiring Key Data Analyst Skills
+
+- The year **2023** began with a strong demand for Data Analyst positions, with **2,318** job postings in **January**.
+- A gradual decline followed, with job postings dropping to **1,422** by **May** and fluctuating throughout the year.
+- **August** saw a rebound, reaching **2,066** postings, but the trend declined again toward the end of the year, ending with **1,299** postings in **December 2023**.
+
+### 📝 Key Takeaways
+
+- **Strong Start**: January 2023 had a notable spike in demand.
+- **Mid-Year Fluctuations**: Job postings showed variability, with peaks and dips throughout the year.
+- **Year-End Decline**: A decrease in postings was observed towards the end of the year, indicating potential seasonal trends.
+
+
 # What I Learned 
 
 # Conclusions

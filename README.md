@@ -62,7 +62,8 @@ LIMIT 5;
 ```
 ![Top 5 Most Demanded Data Analyst skills Visualization](https://github.com/Kishan0705/SQL_Project_Data_Job_Analysis/blob/efb2bbe76b3b9c3b1ef34df4a2eb39c3e4d04bcb/assets/Top%205%20DA%20Skills%20.png)
 
-### 📊 Insights
+
+### 📝 Insights
 
 - **SQL**: Dominates the market with **92,628** job postings. This skill is essential for data retrieval and management.
 
@@ -74,7 +75,67 @@ LIMIT 5;
 
 - **Power BI**: Present in **39,468** job listings. It's increasingly valuable for creating interactive dashboards and reports.
 
+## 🔍 Question 2: Identify the companies that have posted job listings requiring all top 5 skills for "Data Analyst" positions, while offering health insurance and work-from-home options.
 
+- **Condition 1**: Offering **health insurance**.
+- **Condition 2**: Providing **work-from-home options**.
+
+```sql
+WITH top_skills AS (
+    SELECT
+        s.skill_id,
+        s.skills
+    FROM skills_dim s
+    JOIN skills_job_dim sj ON s.skill_id = sj.skill_id
+    JOIN job_postings_fact f ON sj.job_id = f.job_id
+    WHERE f.job_title_short = 'Data Analyst' 
+      AND f.job_health_insurance = 'TRUE'
+      AND f.job_work_from_home = 'TRUE'
+    GROUP BY s.skill_id, s.skills
+    ORDER BY COUNT(f.job_id) DESC
+    LIMIT 5
+),
+jobs_with_all_skills AS (
+    SELECT f.job_id, f.company_id
+    FROM job_postings_fact f
+    JOIN skills_job_dim sj ON f.job_id = sj.job_id
+    JOIN top_skills ts ON ts.skill_id = sj.skill_id
+    GROUP BY f.job_id, f.company_id
+    HAVING COUNT(DISTINCT ts.skill_id) = 5  -- Only jobs that require all 5 skills
+)
+SELECT
+    c.name AS company_name,
+    COUNT(jwa.job_id) AS Jobs_Requiring_All_Skills
+FROM jobs_with_all_skills jwa
+JOIN company_dim c ON jwa.company_id = c.company_id
+GROUP BY c.name
+ORDER BY Jobs_Requiring_All_Skills DESC
+LIMIT 10;
+```
+
+![Top 10 Most Companies Required All 5 Skills for DA Roles Visualization](https://github.com/Kishan0705/SQL_Project_Data_Job_Analysis/blob/45c59cd05daf87b5adf3bc883c10197010a7825c/assets/Top%20Com%20Req%20DA%205%20Skills.png)
+
+## 📝 Insights on Companies Requiring All 5 Skills for Data Analyst Roles
+
+- **Walmart**: Leads the pack with **172 job openings**, highlighting its commitment to finding well-rounded Data Analysts who can handle diverse analytical tasks.
+
+- **Agoda**: With **155 postings**, this travel platform is keen on professionals equipped with essential skills to optimize data-driven decisions in a competitive market.
+
+- **Guidehouse**: Boasts **124 positions** that seek analysts capable of navigating complex datasets, showcasing the company's focus on innovative solutions.
+
+- **Epsilon**: Offers **84 job opportunities** for Data Analysts, emphasizing their need for skilled individuals who can enhance their marketing analytics capabilities.
+
+- **Citi**: With **80 openings**, Citi is on the lookout for Data Analysts who can contribute to their data strategy and financial analytics efforts.
+
+- **Listopro**: Has **68 job listings**, indicating a strong demand for skilled analysts to support their operational and strategic initiatives.
+
+- **Navy Federal Credit Union**: With **63 postings**, this organization values Data Analysts who can manage and interpret financial data effectively.
+
+- **Deloitte**: Offers **54 job openings**, seeking analysts who can deliver insights that drive business transformation and client success.
+
+- **Visa**: With **53 job listings**, Visa looks for analytical talent to enhance its data-driven approach in the financial technology sector.
+
+- **CBRE**: Also has **53 positions**, reflecting the need for Data Analysts who can interpret real estate market trends and data.
 
 # What I Learned 
 

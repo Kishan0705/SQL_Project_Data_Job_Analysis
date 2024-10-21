@@ -38,48 +38,7 @@ This project stems from a growing interest in the Data Analyst field and the evo
 
 # The Analysis 
 
-## Question 1: Which Data Analyst Roles Offer the Highest Salaries?
-- Identify the top 10 highest paying Data Analyst positions available for remote work.
-- Focus on job postings with specified salaries, ensuring null values are excluded.
-- **Why?** Understanding the highest-paying opportunities helps aspiring Data Analysts target their career goals and enhances their knowledge of the job market.
 
-```sql
-
-
-SELECT
-    job_id,
-    job_title,
-    job_location,
-    job_schedule_type,
-    salary_year_avg,
-    job_posted_date,
-    name AS company_name
-FROM
-    job_postings_fact f
-LEFT JOIN 
-    company_dim c 
-ON 
-    f.company_id = c.company_id     
-WHERE
-    job_title_short = 'Data Analyst' AND
-    job_location = 'Anywhere' AND
-    salary_year_avg IS NOT NULL
-ORDER BY 
-    salary_year_avg DESC
-LIMIT 10;
-```
-
-![Top Paying Data Analyst Jobs Visualization](https://raw.githubusercontent.com/Kishan0705/SQL_Project_Data_Job_Analysis/6fb4357d1599d7390ae2e506e9c304fcd5b7fa88/assets/1st_Question.png)
-
-### Insights
-
- **Top 10 Highest-Paying Data Analyst Roles**: This visualization reveals the lucrative landscape for Data Analysts, showcasing roles with impressive average salaries ranging from **$184,000** to **$650,000**! 
-
-- **Mantys** offers the highest salary at **$650,000**, followed by **Meta** with **$336,500** for their **Director of Analytics** position.
-- Other notable positions include **Principal Data Analyst** roles at **SmartAsset**, commanding salaries around **$186,000**.
-- With companies like **Pinterest** and **Uclahealthcareers** also in the mix, this data emphasizes the growing demand and financial rewards within the Data Analyst profession.
-
-📝 **Key Takeaway**: The potential for high earnings in the Data Analyst field is undeniable, making it a prime opportunity for those looking to break into the tech-driven job market.
 
 # What I Learned 
 
